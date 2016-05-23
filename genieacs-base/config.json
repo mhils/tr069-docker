@@ -1,0 +1,15 @@
+{
+  "MONGODB_CONNECTION_URL" : "mongodb://mongo/genieacs",
+  "REDIS_PORT" : "6379",
+  "REDIS_HOST" : "redis",
+  "CWMP_INTERFACE" : "0.0.0.0",
+  "CWMP_PORT" : 7547,
+  "CWMP_SSL" : false,
+  "NBI_INTERFACE" : "0.0.0.0",
+  "NBI_PORT" : 7557,
+  "FS_INTERFACE" : "0.0.0.0",
+  "FS_PORT" : 7567,
+  "FS_IP" : "genieacs-fs",
+  "LOG_INFORMS" : true,
+  "DEBUG" : false
+}
