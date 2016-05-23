@@ -15,17 +15,21 @@ MongoDB and Redis.
 
 Build the **genieacs-base** container. This container will be used as a base
 for each GenieACS process.
+
 `sudo docker build -t genieacs-base ./genieacs-base`
 
 Then, bring the infrastructure up with docker-compose.
+
 `sudo docker-compose up -d`
 
 ## Removing steps
 
 Stop all the containers.
+
 `sudo docker-compose stop`
 
 Remove all containers.
+
 `sudo docker-compose rm --all`
 
 You can also remove images using the `docker rmi` command.
