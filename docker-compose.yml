@@ -19,9 +19,6 @@ services:
     expose:
       - 6379
 
-  genieacs-base:
-    build: genieacs-base
-
   genieacs-cwmp:
     build: genieacs-cwmp
     links:
