@@ -1,4 +1,4 @@
-FROM ruby:2.1
+FROM rails:4.2
 
 MAINTAINER LUXNETWORK Engineering <eng@luxnetwork.lu>
 
