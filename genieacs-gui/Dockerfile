@@ -3,11 +3,10 @@ FROM rails:4.2
 MAINTAINER LUXNETWORK Engineering <eng@luxnetwork.lu>
 
 # Download GenieACS GUI
-RUN mkdir /genieacs-gui
-RUN git clone https://github.com/zaidka/genieacs-gui.git /genieacs-gui
+RUN cd /opt && git clone https://github.com/zaidka/genieacs-gui.git
 
 # Work on the GUI
-WORKDIR /genieacs-gui
+WORKDIR /opt/genieacs-gui
 
 # Setup GenieACS GUI
 RUN rm -f Gemfile.lock
