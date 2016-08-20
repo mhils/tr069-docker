@@ -45,7 +45,6 @@ services:
 
   genieacs-gui:
     build: genieacs-gui
-    command: bundle exec rails s
     links:
       - genieacs-nbi
     ports:

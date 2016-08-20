@@ -1,6 +1,9 @@
-FROM rails:4.2
+FROM ruby:2.3
 
 MAINTAINER LUXNETWORK Engineering <eng@luxnetwork.lu>
+
+# Nodejs is needed
+RUN apt-get update -y && apt-get dist-upgrade -y && apt-get install nodejs -y
 
 # Download GenieACS GUI
 RUN cd /opt && git clone https://github.com/zaidka/genieacs-gui.git
@@ -25,3 +28,4 @@ RUN bin/rake db:migrate RAILS_ENV=development
 
 # Expose GenieACS GUI port
 EXPOSE 3000
+CMD ["rails", "server", "-b", "0.0.0.0"]
