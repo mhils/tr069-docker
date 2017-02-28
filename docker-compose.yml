@@ -1,6 +1,35 @@
 version: '2'
 
+networks:
+  tr:
+
 services:
+
+  mitmproxy:
+    image: mitmproxy/mitmproxy
+    command: mitmdump -R http://acs:7547/ -ddd -a /data/mitm.dump
+    volumes:
+      - ~/data:/data
+    depends_on:
+      - genieacs-cwmp
+    ports:
+      - "8080:8080"
+    expose:
+      - 8080
+    networks:
+      tr:
+        aliases:
+         - mitm
+
+  openwrt:
+    build: openwrt
+    depends_on:
+      - mitmproxy
+    networks:
+      tr:
+        aliases:
+         - openwrt
+
   mongodata:
     image: mongo:3.2
     volumes:
@@ -13,19 +42,29 @@ services:
       - mongodata
     expose:
       - 27017
+    networks:
+     - tr
 
   redis:
     image: redis:2.8
     expose:
       - 6379
+    networks:
+     - tr
 
   genieacs-cwmp:
     build: genieacs-cwmp
+    depends_on:
+      - genieacs-fs
     links:
       - mongo
       - redis
     ports:
       - "7547:7547"
+    networks:
+      tr:
+        aliases:
+         - acs
 
   genieacs-nbi:
     build: genieacs-nbi
@@ -34,6 +73,8 @@ services:
       - redis
     ports:
       - "7557:7557"
+    networks:
+     - tr
 
   genieacs-fs:
     build: genieacs-fs
@@ -42,6 +83,8 @@ services:
       - redis
     ports:
       - "7567:7567"
+    networks:
+     - tr
 
   genieacs-gui:
     build: genieacs-gui
@@ -49,3 +92,5 @@ services:
       - genieacs-nbi
     ports:
       - "3000:3000"
+    networks:
+     - tr
