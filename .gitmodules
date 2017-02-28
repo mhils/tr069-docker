@@ -1,0 +1,3 @@
+[submodule "openacs/openacs"]
+	path = openacs/openacs
+	url = https://github.com/ethanpeng/openacs.git
