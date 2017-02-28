@@ -1,4 +1,4 @@
-FROM node:4.4
+FROM node:7
 
 MAINTAINER LUXNETWORK Engineering <eng@luxnetwork.lu>
 

@@ -31,4 +31,5 @@ GenieacsGui::Application.configure do
   config.genieacs_api_host = 'genieacs-nbi'
   config.genieacs_api_port = 7557
   config.genieacs_api_use_ssl = false
+  config.web_console.whiny_requests = false
 end
