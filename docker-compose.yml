@@ -29,6 +29,8 @@ services:
       tr:
         aliases:
          - openwrt
+    # comment the following line to enable freecwmp
+    entrypoint: "true"
 
   mongodata:
     image: mongo:3.2
@@ -51,6 +53,14 @@ services:
       - 6379
     networks:
      - tr
+
+  # this is here so that the base image is built.
+  genieacs-base:
+    build: genieacs-base
+    image: genieacs-base
+    volumes:
+      - /data/db
+    command: "true"
 
   genieacs-cwmp:
     build: genieacs-cwmp
