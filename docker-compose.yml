@@ -6,7 +6,7 @@ networks:
 services:
 
   mitmproxy:
-    image: mitmproxy/mitmproxy
+    image: mitmproxy/mitmproxy:2.0
     command: mitmdump -R http://acs:7547/ -ddd -a /data/mitm.dump
     volumes:
       - ~/data:/data
