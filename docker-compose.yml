@@ -21,14 +21,14 @@ services:
         aliases:
          - mitm
 
-  openwrt:
-    build: openwrt
+  freecwmp:
+    build: freecwmp
     depends_on:
       - mitmproxy
     networks:
       tr:
         aliases:
-         - openwrt
+         - freecwmp
     # comment the following line to enable freecwmp
     entrypoint: "true"
 
