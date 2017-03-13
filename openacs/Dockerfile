@@ -9,9 +9,11 @@ RUN \
 RUN \
 	cd /opt/openacs &&\
 	ant -f b.xml clean make deploy
+RUN \
+	service mysql start &&\
+	echo "create database openacs" | mysql -uroot
 
 EXPOSE 8080
 CMD \
 	service mysql start &&\
-	echo "create database openacs" | mysql -uroot &&\
 	/opt/jboss/bin/run.sh -c default -b 0.0.0.0

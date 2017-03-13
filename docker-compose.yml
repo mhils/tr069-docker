@@ -7,7 +7,7 @@ services:
 
   mitmproxy:
     image: mitmproxy/mitmproxy:2.0
-    command: mitmdump -R http://acs:7547/ -ddd -a /data/mitm.dump
+    command: mitmdump -R http://genieacs:7547/ -ddd -a /data/mitm.dump
     volumes:
       - ~/data:/data
     depends_on:
@@ -31,6 +31,11 @@ services:
          - freecwmp
     # comment the following line to enable freecwmp
     entrypoint: "true"
+
+  openacs:
+    build: openacs
+    ports:
+     - "8547:8080"
 
   mongodata:
     image: mongo:3.2
@@ -74,7 +79,7 @@ services:
     networks:
       tr:
         aliases:
-         - acs
+         - genieacs
 
   genieacs-nbi:
     build: genieacs-nbi
