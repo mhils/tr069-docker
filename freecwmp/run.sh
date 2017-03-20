@@ -1,6 +1,6 @@
 #!/bin/sh
 
-freecwmp set InternetGatewayDevice.ManagementServer.PeriodicInformInterval 5
+freecwmp set InternetGatewayDevice.ManagementServer.PeriodicInformInterval 60
 freecwmp set InternetGatewayDevice.ManagementServer.PeriodicInformEnable 1 
 
 

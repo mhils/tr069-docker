@@ -30,7 +30,7 @@ services:
         aliases:
          - freecwmp
     # comment the following line to enable freecwmp
-    entrypoint: "true"
+    # entrypoint: "true"
 
   openacs:
     build: openacs
