@@ -12,8 +12,8 @@ config acs
 	option scheme 'http'
 	option username 'freecwmp'
 	option password 'freecwmp'
-	option hostname 'mitm'
-	option port '8080'
+	option hostname 'acs'
+	option port '7547'
 	option path '/'
 
 config device

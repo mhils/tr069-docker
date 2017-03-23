@@ -1,41 +1,91 @@
 version: '2'
 
 networks:
-  tr:
+  fcwmp:
+  honeyc:
+  public:
+  genie:
+
 
 services:
-
-  mitmproxy:
-    image: mitmproxy/mitmproxy:2.0
-    command: mitmdump -R http://genieacs:7547/ -ddd -a /data/mitm.dump
-    volumes:
-      - ~/data:/data
-    depends_on:
-      - genieacs-cwmp
-    ports:
-      - "8080:8080"
-    expose:
-      - 8080
-    networks:
-      tr:
-        aliases:
-         - mitm
 
   freecwmp:
     build: freecwmp
     depends_on:
-      - mitmproxy
+      - sensor-freecwmp
     networks:
-      tr:
-        aliases:
-         - freecwmp
-    # comment the following line to enable freecwmp
-    # entrypoint: "true"
+      - fcwmp
 
-  openacs:
-    build: openacs
+  honeyclient:
+    build: ../libtr069
+    depends_on:
+      - sensor-honeyclient
+    networks:
+      - honeyc
+
+  sensor-honeyclient:
+    build:
+      context: ../monitor
+      dockerfile: Dockerfile-sensor
     ports:
-     - "8547:8080"
+      - "8081:8081"
+    expose:
+      - 7547
+    depends_on:
+      - genieacs-cwmp
+      - collector
+    volumes:
+      - ./certs/cert.crt:/opt/ca-certs
+    environment:
+      REQUESTS_CA_BUNDLE: /opt/ca-certs
+    networks:
+      honeyc:
+        aliases:
+         - acs
+      public:
+
+
+  sensor-freecwmp:
+    build:
+      context: ../monitor
+      dockerfile: Dockerfile-sensor
+    ports:
+      - "8082:8081"
+    expose:
+      - 7547
+    depends_on:
+      - genieacs-cwmp
+      - collector
+    volumes:
+      - ./certs/cert.crt:/opt/ca-certs
+    environment:
+      REQUESTS_CA_BUNDLE: /opt/ca-certs
+    networks:
+      fcwmp:
+        aliases:
+         - acs
+      public:
+
+
+  collector:
+    build:
+      context: ../monitor
+      dockerfile: Dockerfile-collector
+    expose:
+      - 443
+    volumes:
+      - ./certs/cert.crt:/usr/src/tr069monitor/cert.crt
+      - ./certs/cert.key:/usr/src/tr069monitor/cert.key
+      - ./collector.log:/usr/src/tr069monitor/tr069.log
+    networks:
+      public:
+        aliases:
+         - collector
+
+  #openacs:
+  #  build: openacs
+  #  ports:
+  #   - "8547:8080"
 
   mongodata:
     image: mongo:3.2
@@ -50,14 +100,14 @@ services:
     expose:
       - 27017
     networks:
-     - tr
+     - genie
 
   redis:
     image: redis:2.8
     expose:
       - 6379
     networks:
-     - tr
+     - genie
 
   # this is here so that the base image is built.
   genieacs-base:
@@ -77,9 +127,10 @@ services:
     ports:
       - "7547:7547"
     networks:
-      tr:
+      public:
         aliases:
          - genieacs
+      genie:
 
   genieacs-nbi:
     build: genieacs-nbi
@@ -89,7 +140,7 @@ services:
     ports:
       - "7557:7557"
     networks:
-     - tr
+     - genie
 
   genieacs-fs:
     build: genieacs-fs
@@ -99,7 +150,7 @@ services:
     ports:
       - "7567:7567"
     networks:
-     - tr
+     - genie
 
   genieacs-gui:
     build: genieacs-gui
@@ -108,4 +159,4 @@ services:
     ports:
       - "3000:3000"
     networks:
-     - tr
+     - genie
