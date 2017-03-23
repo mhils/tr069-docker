@@ -1,35 +1,34 @@
-# Docker infrastructure to run GenieACS
+# Virtualized TR-069 Test Environment
 
-Build and create a production ready GenieACS using containers to isolate
-processes and data.
+Build and create a virtualized TR-069 environment consisting of the following components:
 
-This will setup all the requirements to run GenieACS and its GUI including
-MongoDB and Redis.
+ - GenieACS (+GUI, DB, ...)
+ - A vanilla freecwmp (openwrt) TR-069 client
+ - A TR-069 honeyclient
+ - Two sensors intercepting communication between clients and ACS
+ - Log collector that receives data from sensors.
 
 ## Requirements
 
   * [docker](https://docs.docker.com/engine/installation/)
   * [docker-compose](https://docs.docker.com/compose/overview/)
 
-## Building steps
+## Quick Start
 
-Build the **genieacs-base** container. This container will be used as a base
-for each GenieACS process.
+Bring everything up with a single docker-compose:
 
-`sudo docker build -t genieacs-base ./genieacs-base`
+```
+docker-compose up -d
+```
 
-Then, bring the infrastructure up with docker-compose.
+Once started, you can visit the following URLs:
 
-`sudo docker-compose up -d`
+- http://localhost:3000/ - the GenieACS web interface
+- http://localhost:8082/ - the freecwmp sensor interface
+- http://localhost:8081/ - the honeyclient sensor interface.
 
-## Removing steps
+The honeyclient will not show any traffic as it needs to be operated manually in this setup. It can be started like this:
 
-Stop all the containers.
-
-`sudo docker-compose stop`
-
-Remove all containers.
-
-`sudo docker-compose rm --all`
-
-You can also remove images using the `docker rmi` command.
+```
+docker-compose run honeyclient
+```
