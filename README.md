@@ -32,3 +32,7 @@ The honeyclient will not show any traffic as it needs to be operated manually in
 ```
 docker-compose run honeyclient
 ```
+
+## Acknowledgements
+
+This work is based on https://gitlab.com/gmazoyer/docker-genieacs/.
