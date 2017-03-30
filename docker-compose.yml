@@ -17,7 +17,7 @@ services:
       - fcwmp
 
   honeyclient:
-    build: ../libtr069
+    build: ../honeyclient
     depends_on:
       - sensor-honeyclient
     networks:
