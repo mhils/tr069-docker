@@ -76,7 +76,7 @@ services:
     volumes:
       - ./certs/cert.crt:/usr/src/tr069monitor/cert.crt
       - ./certs/cert.key:/usr/src/tr069monitor/cert.key
-      - ./collector.log:/usr/src/tr069monitor/tr069.log
+      - .:/usr/src/tr069monitor/data
     networks:
       public:
         aliases:
